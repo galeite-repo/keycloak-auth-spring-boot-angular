@@ -1,0 +1,17 @@
+keycloak:
+  realm: tutorial
+  auth-server-url: http://localhost:8082/auth
+  ssl-required: external
+  resource: backend
+  use-resource-role-mappings: true
+  bearer-only: true
+  public-client: true
+
+# spring:
+#   main:
+#     allow-circular-references: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.keycloak: DEBUG
