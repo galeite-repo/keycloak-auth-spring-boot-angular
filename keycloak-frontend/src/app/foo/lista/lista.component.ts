@@ -28,4 +28,13 @@ export class ListaComponent implements OnInit {
     );
   }
 
+  onDelete(id: any): void {
+    this.fooService.delete(id).subscribe(
+      data => {
+        console.log(data);
+        this.LoadFoos();
+      },
+      err => console.log(err)
+    );
+  }
 }

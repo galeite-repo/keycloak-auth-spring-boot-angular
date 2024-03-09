@@ -11,6 +11,7 @@ import { FooService } from 'src/app/services/foo.service';
 export class DetailComponent implements OnInit {
   foo!: Foo;
   constructor(private fooService: FooService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params['id'];
     this.fooService.detail(id).subscribe(data => {

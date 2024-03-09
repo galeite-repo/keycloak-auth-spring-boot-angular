@@ -9,8 +9,8 @@ import javax.annotation.security.RolesAllowed;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +31,11 @@ public class FooController {
     List<Foo> foos = Stream.of(new Foo(1, "foo 1"), new Foo(2, "foo 2"), new Foo(3, "foo 3"))
             .collect(Collectors.toList());
 
-    @RolesAllowed("backend-user")
     @GetMapping("/list")
+    @RolesAllowed("backend-user")
     public ResponseEntity<List<Foo>> list() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("auth: " + authentication);
         return new ResponseEntity<List<Foo>>(foos, HttpStatus.OK);
     }
 
@@ -58,7 +60,6 @@ public class FooController {
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody Foo foo) {
         Foo fooUpdate = foos.stream().filter(f -> f.getId() == id).findFirst().orElse(null);
         fooUpdate.setName(foo.getName());
-        foos.add(fooUpdate);
         return new ResponseEntity<ResponseMessage>(new ResponseMessage("atualizado"), HttpStatus.OK);
     }
 

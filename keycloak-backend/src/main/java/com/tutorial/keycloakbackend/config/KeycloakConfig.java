@@ -1,12 +1,14 @@
 package com.tutorial.keycloakbackend.config;
 
-
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
+import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -26,6 +28,7 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
         KeycloakAuthenticationProvider provider = new KeycloakAuthenticationProvider();
         provider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
         auth.authenticationProvider(provider);
+        System.out.println(auth);
     }
 
     @Bean
@@ -35,18 +38,18 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception
-    {
+    protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
-        
+
         http
                 .authorizeRequests()
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
         http.csrf().disable();
     }
 
     @Bean
-    public KeycloakConfigResolver keycloakConfigResolver(){
+    public KeycloakConfigResolver keycloakConfigResolver() {
         return new KeycloakSpringBootConfigResolver();
     }
+
 }

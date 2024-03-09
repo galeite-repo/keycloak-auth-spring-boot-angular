@@ -12,14 +12,13 @@
         <tbody>
           <tr *ngFor="let foo of foos">
            
-              <th>{{foo.id}}</th>
+            <th>{{foo.id}}</th>
             <td>{{foo.name}}</td>
 
-
               <td><button type="button" routerLink="/detail/{{foo.id}}" class="btn btn-outline-primary"><i class="far fa-eye"></i> Ver</button></td>
-              <td><button *ngIf="isAdmin" type="button" routerLink="/update/{{foo.id}}" class="btn btn-outline-warning"><i class="far fa-edit"></i> Editar</button></td>
-              <td><button *ngIf="isAdmin" type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i> Excluir</button></td>
-
+              <td *ngIf="isAdmin"><button  type="button" routerLink="/update/{{foo.id}}" class="btn btn-outline-warning"><i class="far fa-edit"></i> Editar</button></td>
+              <td *ngIf="isAdmin"><button  type="button" class="btn btn-outline-danger" (click)="onDelete(foo.id)" ><i class="far fa-trash-alt"></i> Excluir</button></td>
+              <!-- <td *ngIf="isAdmin"><button class="btn btn-outline-danger" (click)="onDelete(foo.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td> -->
             
           </tr>
         </tbody>

@@ -19,9 +19,10 @@ export class AppComponent {
   }
 
   authConfig: AuthConfig = {
-    issuer: 'http://localhost:8082/realms/tutorial',
+    issuer: 'http://192.168.0.170:8081/realms/tutorial',
     clientId: 'frontend',
     responseType: 'code',
+    requireHttps: false,
     redirectUri: window.location.origin,
     scope: 'openid offline_access profile email',
     showDebugInformation: true,
@@ -40,6 +41,9 @@ export class AppComponent {
           this.username = this.loginService.getName();
           this.messageService.sendMessage(this.username);
         }
+        // else{
+        //   this.loginService.login();
+        // }
       })
   }
  
